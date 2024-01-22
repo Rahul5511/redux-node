@@ -1,13 +1,28 @@
 const express = require('express');
 const cors = require('cors');
+const dbConnection = require('./DB/db');
+const userRouter = require('./route/userRoute');
 
 const app = express();
 
-//enabiling Cors
+//Middlewares
+
+app.use(express.json());
 app.use(cors());
 
-const port = 4865;
+//Routers
+app.use(userRouter)
 
-app.listen(port,() => {
-    console.log(`server is running on ${port}`)
+app.use('/',(req,res) => {
+    res.send('Welocme To Node js server')
 })
+
+//Database connection
+dbConnection();
+
+
+
+//port where the server will run
+const port = 5920;
+
+app.listen(port,() => console.log(`app is listening on ${port}`))
